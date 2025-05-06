@@ -1,41 +1,62 @@
 import java.util.*;
-public record order(String subject, String date){
-    public Order{
-         System.out.println("Subject: "+ subject + " Date: " + date);
-    }
-}
+    
+
 public class Note {
-    private Order one;
-    public Note(Order one){
-        this.order = one;
+    private Order order;
+    private String subject;
+    private String noteEntry;
+    private static List<Note> noteList = new ArrayList<>();
+
+
+    public Note(String subject, Order order) {
+        this.order = order;
+        this.subject = subject;
+
     }
-    public void add(){
-        Entry();
-    }
-    public void Entry(){
+
+    public void entry() {
         Scanner input = new Scanner(System.in);
         StringBuilder stringBuilder = new StringBuilder();
-        while(input.hasNextLine()){
+        while (input.hasNextLine()) {
             String line = input.nextLine();
-            if(line.equals("Done")){
+            if (line.equals("Done")) {
                 break;
             }
-    
+
             stringBuilder.append(line).append("\n");
         }
         noteEntry = stringBuilder.toString();
-       
+
     }
-    public String Print(){
+
+    public String print() {
         return noteEntry;
     }
-    public static void main( String [] args){
-        Order one = new Order("Data Structures","03/12/2025");
-        Note pr = new Note(one);
 
-        pr.Entry();
+    public String getDate() {
+        return order.date();
+    }
+
+    public String getTitle() {
+        return order.title();
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public static void main(String[] args) {
+        NoteManager manager = new NoteManager();
+        Note note = new Note("intro to hashcode", new Order("Data Structures", "05/05/2025"));
+        note.entry();
+
+        manager.addNote(note.getSubject(), note);
+        manager.printNotes();
 
 
-    
     }
 }
